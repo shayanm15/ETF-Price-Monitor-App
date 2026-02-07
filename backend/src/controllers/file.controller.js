@@ -8,6 +8,15 @@ class FileController {
     async uploadFile(req, res) {
         try {
             const { file } = req;
+
+            if (!file) {
+                return res.status(400).json({ status: 'error', message: 'No file uploaded' });
+            }
+
+            if (file.mimetype !== 'text/csv') {
+                return res.status(400).json({ status: 'error', message: 'File must be a CSV' });
+            }
+
             // Convert the file buffer to string
             const fileContent = file.buffer.toString('utf-8');
 
@@ -15,7 +24,7 @@ class FileController {
             res.json({ status: 'success', data });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ status: 'error', message: 'Unable to upload file' });
+            res.status(400).json({ status: 'error', message: error.message });
         }
     }
 }
