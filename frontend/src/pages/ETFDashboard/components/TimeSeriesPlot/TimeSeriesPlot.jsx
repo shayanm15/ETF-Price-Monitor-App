@@ -7,9 +7,18 @@ const TimeSeriesPlot = ({
     return (
         <div className="chartCard">
             <h2>Historical ETF Price</h2>
-            <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={data} margin={{ top: 10, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <ResponsiveContainer
+                width="100%"
+                height={525}
+            >
+                <LineChart
+                    data={data}
+                    margin={{ top: 10, right: 10, left: 10, bottom: 5 }}
+                >
+                    <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="#e2e8f0"
+                    />
                     <XAxis
                         dataKey="date"
                         tick={{ fontSize: 12 }}
@@ -26,8 +35,18 @@ const TimeSeriesPlot = ({
                         formatter={(value) => [`$${value.toFixed(2)}`, 'Price']}
                         labelFormatter={(label) => `Date: ${label}`}
                     />
-                    <Brush dataKey="date" height={30} stroke="#3b82f6" />
-                    <Line type="monotone" dataKey="price" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                    <Brush
+                        dataKey="date"
+                        height={30}
+                        stroke="#3b82f6"
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey="price"
+                        stroke="#3b82f6"
+                        strokeWidth={2}
+                        dot={false}
+                    />
                 </LineChart>
             </ResponsiveContainer>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import axios from 'axios';
 import { Button } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -8,15 +8,18 @@ import "./FileUpload.css"
 const FileUpload = ({
     setETFData = () => { },
     setError = () => { },
-    setOpenAlert = () => { }
+    setOpenAlert = () => { },
+    setLoading = () => { },
+    loading
 }) => {
     const fileInputRef = useRef(null);
 
 
-    const handleFileUpload = async (e) => {
+    const uploadCSVFile = async (file) => {
 
         try {
-            const file = e.target.files[0];
+            setLoading(true);
+
             if (!file) {
                 return;
             }
@@ -36,15 +39,34 @@ const FileUpload = ({
         } catch (error) {
             setError(error.response?.data?.message || error.message);
         } finally {
-            e.target.value = '';
             setOpenAlert(true);
+            setLoading(false);
+
         }
+    }
+
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        await uploadCSVFile(file);
+        e.target.value = '';
+    }
+
+    const handleFileDrop = async (e) => {
+        // Prevents the browser default behavior of opening/downloading the file
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        await uploadCSVFile(file);
     }
 
     return (
         <div className="uploadCard">
             <h2>Upload CSV Files</h2>
-            <div className="dropzone" onClick={() => fileInputRef.current.click()}>
+            <div
+                className={`dropzone ${loading ? 'disabled' : ''}`} 
+                onClick={() => !loading && fileInputRef.current.click()}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={!loading && handleFileDrop}
+            >
                 <CloudUploadIcon className="icon" />
                 <p className="label">
                     Drag & drop CSV files here,<br />or click to browse

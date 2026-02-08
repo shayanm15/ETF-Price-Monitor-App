@@ -21,6 +21,11 @@
     transition: border-color 0.15s, background 0.15s;
 }
 
+.dropzone .disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 .dropzone:hover {
     border-color: #93c5fd;
     background: #f8fafc;

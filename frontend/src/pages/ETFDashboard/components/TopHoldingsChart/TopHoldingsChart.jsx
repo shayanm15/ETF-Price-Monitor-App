@@ -7,9 +7,14 @@ const TopHoldingsChart = ({
     return (
         <div className="chartCard">
             <h2>Top 5 Holdings</h2>
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart layout="vertical" data={data}
-                    margin={{ top: 10, right: 30, left: 80, bottom: 5 }}>
+            <ResponsiveContainer
+                width="100%"
+                height={350}
+            >
+                <BarChart
+                    layout="vertical" data={data}
+                    margin={{ top: 10, right: 10, left: 10, bottom: 5 }}
+                >
                     <XAxis
                         type='number'
                         tick={{ fontSize: 12 }}
@@ -26,7 +31,11 @@ const TopHoldingsChart = ({
                         formatter={(value) => [`$${value.toFixed(2)}`, 'Holding Size']}
                         labelFormatter={(label) => `Constituent: ${label}`}
                     />
-                    <Bar dataKey="holdingSize" fill="#3b82f6" radius={[0, 6, 6, 0]} />
+                    <Bar
+                        dataKey="holdingSize"
+                        fill="#3b82f6"
+                        radius={[0, 6, 6, 0]}
+                    />
                 </BarChart>
             </ResponsiveContainer>
         </div>

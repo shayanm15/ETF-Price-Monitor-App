@@ -1,0 +1,15 @@
+p {
+    margin-bottom: 15px;
+}
+
+.appContainer {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+@media (max-width: 768px) {
+    .appContainer {
+        padding: 16px 12px;
+    }
+}
