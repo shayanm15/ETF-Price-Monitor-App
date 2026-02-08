@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import FileUpload from './components/FileUpload/FileUpload';
 import ActionAlert from '../../components/ActionAlert/ActionAlert';
 import ConstituentTable from './components/ConstituentTable/ConstituentTable';
+import TimeSeriesPlot from './components/TimeSeriesPlot/TimeSeriesPlot';
+import TopHoldingsChart from './components/TopHoldingsChart/TopHoldingsChart';
 
 const ETFDashboard = () => {
 
@@ -22,9 +24,23 @@ const ETFDashboard = () => {
                 openAlert={openAlert}
                 setOpenAlert={setOpenAlert}
             />
-            {etfData ? (
+            {etfData?.mostRecentConstituentData ? (
                 <ConstituentTable
                     data={etfData.mostRecentConstituentData}
+                />
+            ) : (
+                null
+            )}
+            {etfData?.etfPriceTimeData ? (
+                <TimeSeriesPlot
+                    data={etfData?.etfPriceTimeData}
+                />
+            ) : (
+                null
+            )}
+            {etfData?.topHoldings ? (
+                <TopHoldingsChart
+                    data={etfData?.topHoldings}
                 />
             ) : (
                 null

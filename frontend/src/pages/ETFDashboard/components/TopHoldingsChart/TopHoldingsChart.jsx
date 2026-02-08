@@ -1,0 +1,36 @@
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import './TopHoldingsChart.css';
+
+const TopHoldingsChart = ({
+    data
+}) => {
+    return (
+        <div className="chartCard">
+            <h2>Top 5 Holdings</h2>
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart layout="vertical" data={data}
+                    margin={{ top: 10, right: 30, left: 80, bottom: 5 }}>
+                    <XAxis
+                        type='number'
+                        tick={{ fontSize: 12 }}
+                        tickMargin={8}
+                    />
+                    <YAxis
+                        type="category"
+                        dataKey="name"
+                        tick={{ fontSize: 12 }}
+                        tickMargin={8}
+                        label={{ value: 'Constituent', angle: -90, position: 'insideLeft', offset: -5, style: { fontSize: 13, fill: '#64748b' } }}
+                    />
+                    <Tooltip
+                        formatter={(value) => [`$${value.toFixed(2)}`, 'Holding Size']}
+                        labelFormatter={(label) => `Constituent: ${label}`}
+                    />
+                    <Bar dataKey="holdingSize" fill="#3b82f6" radius={[0, 6, 6, 0]} />
+                </BarChart>
+            </ResponsiveContainer>
+        </div>
+    )
+}
+
+export default TopHoldingsChart
