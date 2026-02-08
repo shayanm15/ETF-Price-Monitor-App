@@ -121,8 +121,10 @@ class FileService {
         const etfPriceTimeData = getETFPriceTimeSeries(data, this.prices);
         const topHoldings = getTopHoldings(mostRecentConstituentData);
 
+        const constituentData = mostRecentConstituentData.map(({ holdingSize, ...data }) => data);
+
         return {
-            mostRecentConstituentData,
+            constituentData,
             etfPriceTimeData,
             topHoldings
         };
