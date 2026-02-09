@@ -8,7 +8,7 @@
 }
 
 .uploadCard h2 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 16px;
 }
@@ -45,6 +45,6 @@
 
 .dropzone .hint {
     color: #94a3b8;
-    font-size: 12px;
+    font-size: 13px;
     margin-top: 8px;
 }

@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from '@mui/material';
 
-function Spinner({ size = 60, color = '#1c71fd' }) {
+function Spinner({ size = 60, color = '#10b981' }) {
     return (
         <Box
             sx={{
