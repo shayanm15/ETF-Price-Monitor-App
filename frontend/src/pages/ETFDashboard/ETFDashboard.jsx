@@ -20,7 +20,7 @@ const ETFDashboard = () => {
             {loading ? (
                 <Spinner />
             ) : (
-                <div className='dashboard'>
+                <div className={etfData ? 'dashboard' : 'dashboardEmpty'}>
                     <div>
                         <FileUpload
                             setETFData={setETFData}
@@ -29,6 +29,16 @@ const ETFDashboard = () => {
                             setLoading={setLoading}
                             loading={loading}
                         />
+                        {openAlert ? (
+                            <ActionAlert
+                                isSuccess={!error}
+                                message={error ? error : 'File uploaded successfully'}
+                                openAlert={openAlert}
+                                setOpenAlert={setOpenAlert}
+                            />
+                        ) : (
+                            null
+                        )}
                         {!error && etfData?.constituentData ? (
                             <ConstituentTable
                                 data={etfData.constituentData}
@@ -37,28 +47,24 @@ const ETFDashboard = () => {
                             null
                         )}
                     </div>
-                    <div>
-                        {!error && etfData?.etfPriceTimeData ? (
-                            <TimeSeriesPlot
-                                data={etfData?.etfPriceTimeData}
-                            />
-                        ) : (
-                            null
-                        )}
-                        {!error && etfData?.topHoldings ? (
-                            <TopHoldingsChart
-                                data={etfData?.topHoldings}
-                            />
-                        ) : (
-                            null
-                        )}
-                    </div>
-                    <ActionAlert
-                        isSuccess={!error}
-                        message={error ? error : 'File uploaded successfully'}
-                        openAlert={openAlert}
-                        setOpenAlert={setOpenAlert}
-                    />
+                    {etfData && (
+                        <div>
+                            {!error && etfData?.etfPriceTimeData ? (
+                                <TimeSeriesPlot
+                                    data={etfData?.etfPriceTimeData}
+                                />
+                            ) : (
+                                null
+                            )}
+                            {!error && etfData?.topHoldings ? (
+                                <TopHoldingsChart
+                                    data={etfData?.topHoldings}
+                                />
+                            ) : (
+                                null
+                            )}
+                        </div>
+                    )}
                 </div>
             )}
         </>

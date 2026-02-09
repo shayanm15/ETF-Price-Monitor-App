@@ -38,6 +38,7 @@ const FileUpload = ({
 
         } catch (error) {
             setError(error.response?.data?.message || error.message);
+            setETFData(null);
         } finally {
             setOpenAlert(true);
             setLoading(false);
@@ -62,7 +63,7 @@ const FileUpload = ({
         <div className="uploadCard">
             <h2>Upload CSV Files</h2>
             <div
-                className={`dropzone ${loading ? 'disabled' : ''}`} 
+                className={`dropzone ${loading ? 'disabled' : ''}`}
                 onClick={() => !loading && fileInputRef.current.click()}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={!loading && handleFileDrop}

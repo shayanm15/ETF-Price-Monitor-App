@@ -1,8 +1,4 @@
-import { useState } from 'react'
 import ETFDashboard from '../pages/ETFDashboard/ETFDashboard'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import '../styles/App.css'
 import './App.css';
 
 function App() {

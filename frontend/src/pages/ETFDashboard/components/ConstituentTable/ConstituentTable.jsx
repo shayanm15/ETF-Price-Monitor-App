@@ -7,7 +7,7 @@ const ConstituentTable = ({
 
     const columns = [
         { field: 'name', headerName: 'Name', flex: 1 },
-        { field: 'weight', headerName: 'Weight', flex: 1, valueFormatter: (value) => `${(value * 100).toFixed(1)}%` },
+        { field: 'weight', headerName: 'Weight', flex: 1 },
         { field: 'recentClosePrice', headerName: 'Latest Close', flex: 1, valueFormatter: (value) => `$${value.toFixed(2)}` },
     ];
 
