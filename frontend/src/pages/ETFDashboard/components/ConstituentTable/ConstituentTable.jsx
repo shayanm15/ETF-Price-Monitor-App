@@ -1,4 +1,5 @@
 import { DataGrid } from '@mui/x-data-grid';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import './ConstituentTable.css';
 
 const ConstituentTable = ({
@@ -14,6 +15,10 @@ const ConstituentTable = ({
     return (
         <div className="constituentCard">
             <h2>Constituent Data</h2>
+            <p className="chartDescription">
+                <InfoOutlinedIcon sx={{ fontSize: 16 }} />
+                An interactive table of the constituent data
+            </p>
             <DataGrid
                 rows={data}
                 columns={columns}

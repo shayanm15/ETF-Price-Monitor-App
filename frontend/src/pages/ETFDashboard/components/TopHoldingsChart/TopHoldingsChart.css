@@ -8,7 +8,7 @@
 }
 
 .chartCard h2 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 4px;
 }
@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
+    font-size: 14px;
     color: #64748b;
     margin-bottom: 12px;
 }

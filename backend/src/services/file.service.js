@@ -35,7 +35,8 @@ function loadPrices() {
 
 // Time Complexity: O(n)
 // Space Complexity: O(n)
-// getMostRecentConstituentData: Returns an array of objects, where each object stores the most recent close price and holding size of the constituents
+// getMostRecentConstituentData: Returns an array of objects, where each object stores the most recent close price 
+// and holding size of the constituents
 function getMostRecentConstituentData(etfData, prices) {
 
     // Assuming the prices in prices.csv are sorted chronologically, the latest price is the last row
@@ -53,7 +54,8 @@ function getMostRecentConstituentData(etfData, prices) {
 
 // Time Complexity: O(n * m) where n = number of dates, m = number of constituents
 // Space Complexity: O(n)
-// getETFPriceTimeSeries: Returns an array of objects, where each object stores date and the price of the ETF for the date by calculating the weighted sums for each individual price
+// getETFPriceTimeSeries: Returns an array of objects, where each object stores date and the price of the ETF for the date 
+// by calculating the weighted sums for each individual price
 function getETFPriceTimeSeries(etfData, prices) {
     let data = prices.map((price) => {
         let sum = 0;
@@ -112,6 +114,8 @@ class FileService {
         this.prices = prices;
     }
 
+    // uploadFile: Validates and parses the uploaded CSV, then returns all computed ETF data (Constituent data, 
+    // ETF price over time data and top 5 holdings)
     async uploadFile(fileString) {
         const fileRows = parse(fileString, { columns: true });
         let data = [];

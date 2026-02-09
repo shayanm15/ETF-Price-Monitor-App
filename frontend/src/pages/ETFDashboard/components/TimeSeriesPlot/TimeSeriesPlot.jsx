@@ -14,7 +14,7 @@ const TimeSeriesPlot = ({
             </p>
             <ResponsiveContainer
                 width="100%"
-                height={500}
+                height={525}
             >
                 <LineChart
                     data={data}

@@ -30,7 +30,7 @@ npm run dev
 
 **Start the backend**
 ```bash
-cd ../backend
+cd backend
 npm install
 npm run dev
 ```
@@ -48,6 +48,7 @@ Your uploaded file must:
 - Use comma delimiters
 - Contain columns: `name`, `weight`
 - Use constituent names that match the headers in `prices.csv` (case-sensitive)
+- Must be 1 CSV file
 
 Example format:
 ```csv

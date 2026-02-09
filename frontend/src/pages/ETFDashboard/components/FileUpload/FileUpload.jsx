@@ -12,8 +12,9 @@ const FileUpload = ({
     setLoading = () => { },
     loading
 }) => {
+    
+    // Reference to the hidden file input element, used to programmatically trigger the file browser on dropzone click
     const fileInputRef = useRef(null);
-
 
     const uploadCSVFile = async (file) => {
 
@@ -56,6 +57,14 @@ const FileUpload = ({
     const handleFileDrop = async (e) => {
         // Prevents the browser default behavior of opening/downloading the file
         e.preventDefault();
+
+        // Exit execution and set error if exactly one file is not being dragged and dropped
+        if (e.dataTransfer.files.length !== 1) {
+            setError('Please only upload 1 CSV file');
+            setOpenAlert(true);
+            return;
+        }
+
         const file = e.dataTransfer.files[0];
         await uploadCSVFile(file);
     }
