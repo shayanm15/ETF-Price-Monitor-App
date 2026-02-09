@@ -74,7 +74,7 @@ const FileUpload = ({
                     Drag & drop CSV file here,<br />or click to browse
                 </p>
                 <Button variant="contained" sx={{ backgroundColor: '#10b981', '&:hover': { backgroundColor: '#059669' } }}>Upload</Button>
-                <p className="hint">CSV files only</p>
+                <p className="hint">CSV file only</p>
                 <input type="file" accept=".csv" hidden ref={fileInputRef} onChange={handleFileUpload} />
             </div>
         </div>
