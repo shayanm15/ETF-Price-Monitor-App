@@ -18,7 +18,7 @@ Once validation passes, the dashboard renders three key views:
 **Clone the repository**
 ```bash
 git clone <repo url>
-cd ETF-Price-Monitor
+cd ETF-Price-Monitor-App
 ```
 
 **Start the frontend**
@@ -68,7 +68,7 @@ When an ETF CSV is uploaded, the backend validates the file by enforcing the fol
 - The file is not empty
 - The CSV contains `name` and `weight` columns
 - All weights are numeric
-- All weights are greater than 0 (no zero or negative values)
+- All weights are non-negative numbers (weights >= 0)
 - Every uploaded constituent in the ETF CSV exists as a column in `prices.csv`
 - All uploaded constituents must be unique (no duplicates)
 

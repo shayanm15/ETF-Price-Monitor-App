@@ -18,11 +18,12 @@ const FileUpload = ({
     const uploadCSVFile = async (file) => {
 
         try {
-            setLoading(true);
 
             if (!file) {
                 return;
             }
+
+            setLoading(true);
 
             // FormData handles the file encoding to multipart/form-data
             const formData = new FormData();
@@ -61,18 +62,18 @@ const FileUpload = ({
 
     return (
         <div className="uploadCard">
-            <h2>Upload CSV Files</h2>
+            <h2>Upload CSV File</h2>
             <div
                 className={`dropzone ${loading ? 'disabled' : ''}`}
                 onClick={() => !loading && fileInputRef.current.click()}
                 onDragOver={(e) => e.preventDefault()}
-                onDrop={!loading && handleFileDrop}
+                onDrop={(e) => !loading && handleFileDrop(e)}
             >
                 <CloudUploadIcon className="icon" />
                 <p className="label">
-                    Drag & drop CSV files here,<br />or click to browse
+                    Drag & drop CSV file here,<br />or click to browse
                 </p>
-                <Button variant="contained">Upload</Button>
+                <Button variant="contained" sx={{ backgroundColor: '#10b981', '&:hover': { backgroundColor: '#059669' } }}>Upload</Button>
                 <p className="hint">CSV files only</p>
                 <input type="file" accept=".csv" hidden ref={fileInputRef} onChange={handleFileUpload} />
             </div>
