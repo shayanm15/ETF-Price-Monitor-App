@@ -12,7 +12,7 @@ const FileUpload = ({
     setLoading = () => { },
     loading
 }) => {
-    
+
     // Reference to the hidden file input element, used to programmatically trigger the file browser on dropzone click
     const fileInputRef = useRef(null);
 
@@ -30,7 +30,7 @@ const FileUpload = ({
             const formData = new FormData();
             formData.append('file', file);
 
-            // Sending a file server side needs to sent as multipart/form-data due to the encoding format that browsers use for file uploads
+            // Sending a file server side needs to be sent as multipart/form-data due to the encoding format that browsers use for file uploads
             const res = await axios.post(`${API_URL}file/upload`, formData);
 
             if (res.status === 200 && res.data.status === "success") {

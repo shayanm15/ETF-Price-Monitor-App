@@ -2,9 +2,9 @@ const fs = require("fs");
 const path = require("path");
 const { parse } = require("csv-parse/sync");
 
-// Time Complexity: O(n)
+// Time Complexity: O(n) where n = number of rows (dates) in prices.csv
 // Space Complexity: O(n)
-// loadPrices: Returns an object containing the parsed prices with their dates from reading the prices.csv file
+// loadPrices: Returns an array of objects containing the parsed prices with their dates from reading the prices.csv file
 
 // Future Improvement: Use async fs.promises.readFile for non-blocking I/O
 // Current sync approach is acceptable since we execute loadPrices() once at module load
@@ -16,9 +16,7 @@ function loadPrices() {
 
     const csvRows = parse(pricesCSVString, { columns: true });
 
-    let prices = [];
-
-    prices = csvRows.map((row, i) => {
+    const prices = csvRows.map((row, i) => {
         const pricesObj = { DATE: row.DATE };
         for (const [key, value] of Object.entries(row)) {
 
@@ -33,7 +31,7 @@ function loadPrices() {
     return prices;
 }
 
-// Time Complexity: O(n)
+// Time Complexity: O(n) where n = number of constituents
 // Space Complexity: O(n)
 // getMostRecentConstituentData: Returns an array of objects, where each object stores the most recent close price 
 // and holding size of the constituents
@@ -72,21 +70,20 @@ function getETFPriceTimeSeries(etfData, prices) {
     return data;
 }
 
-// Time Complexity: O(n log n)
+// Time Complexity: O(n log n) where n = number of constituents
 // Space Complexity: O(n)
 // getTopHoldings: Returns an array of objects for the top 5 biggest holdings in the ETF as of the latest market close
 
 // Future Improvement: Use a min-heap for O(n log k) time complexity where k = 5
 // Maintain only a heap of size k instead of sorting the entire array
 // Would need to build a min-heap first as it is not provided natively in JavaScript
-
 function getTopHoldings(mostRecentConstituentData) {
     return [...mostRecentConstituentData]
         .sort((a, b) => b.holdingSize - a.holdingSize)
         .slice(0, 5);
 }
 
-// Time Complexity: O(n)
+// Time Complexity: O(n) where n = number of constituents
 // Space Complexity: O(n)
 // findDuplicateConstituents: Returns an array of duplicate constituent names found in the uploaded ETF CSV
 function findDuplicateConstituents(constituents) {
@@ -125,9 +122,9 @@ class FileService {
         const allColumns = fileRows.flatMap(row => Object.keys(row));
         const uniqueColumns = [...new Set(allColumns)];
 
-        // Throw error if file has no content
+        // Throw error if file is empty or contains only column headers with no data rows
         if (fileRows.length === 0) {
-            throw new Error('File is empty');
+            throw new Error('File is empty or contains no data rows');
         }
 
         // Throw error if required columns 'name' and 'weight' are missing (case-sensitive)
@@ -143,7 +140,10 @@ class FileService {
                 errors.push(`Invalid weight value at row ${i + 1}: "${row.weight}"`);
             }
 
-            return { name: row.name, weight };
+            return {
+                name: row.name,
+                weight
+            };
         });
 
         const constituentNames = data.map((row) => row.name);

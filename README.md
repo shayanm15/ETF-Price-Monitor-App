@@ -5,7 +5,7 @@
 
 The ETF Price Monitor is a single-page web application that acts as an analytic dashboard for traders to visually explore historical prices for an ETF and its top holdings. The app prompts the user to drag-and-drop or upload a CSV file containing ETF constituents and their portfolio weights.
 
-On upload, the application runs validation to ensure the file is usable. It checks that the CSV includes the required columns (`name` and `weight`), verifies that weights are valid positive numeric values, ensures the file is not empty, checks for duplicate constituents in the uploaded file, and confirms that each uploaded constituent exists in the server's historical price dataset (`prices.csv`).
+On upload, the application runs validation to ensure the file is usable. It checks that the CSV includes the required columns (`name` and `weight`), verifies that weights are valid non-negative numeric values, ensures the file is not empty, checks for duplicate constituents in the uploaded file, and confirms that each uploaded constituent exists in the server's historical price dataset (`prices.csv`).
 
 Once validation passes, the dashboard renders three key views:
 - An interactive table displaying the latest close price for each constituent.
@@ -114,10 +114,22 @@ If any check fails, the API returns a clear error message with status 400. The U
 - Built-in interactive features (tooltips, zoom/brush) work with minimal configuration.
 - Responsive containers make charts adapt cleanly across screen sizes.
 
+## UI Design & Layout
+- The dashboard uses a CSS Grid with `grid-template-columns: 1fr 2fr`, creating a two-column layout where the left column (file upload and constituent table) takes up 1/3 of the width and the right column (time series and top holdings charts) takes up 2/3.
+- This layout displays all visualizations, charts, and tables on a single view without requiring the user to scroll, making it easy to analyze ETF data at a glance.
+- UI is designed to be responsive for tablet and mobile screens (below 1050px), the grid collapses to a single column (`1fr`) so components stack vertically for accessible readability.
+
+## Backend & API Design
+- The backend uses Node.js (Express) running on port 3001 and follows a **route → controller → service** layered pattern to separate concerns:
+  - **Route** (`file.route.js`): Defines the REST endpoint and configures `multer` middleware for parsing multipart/form-data file uploads into memory.
+  - **Controller** (`file.controller.js`): Handles request-level validation (e.g., no file uploaded, non-CSV file type), delegates business logic to the service, and returns the JSON response.
+  - **Service** (`file.service.js`): Contains all data validation (missing columns, invalid weights, duplicates, unknown constituents) and computation logic (ETF price time series, top holdings, constituent data).
+- This layered structure keeps each layer focused on a single responsibility, making the backend organized and easy to scale when adding new API endpoints.
+
 
 ## Performance & Optimization
 - **Prices are loaded once:** `prices.csv` is read at server startup and cached in memory, so uploads do not re-read `prices.csv` from disk.
-- **Backend does the heavy lifting:** Server-side handles heavy computation of weighted sums, top k sorting, and object transformations, thus allowing the frontend to receive ready-to-render data.
+- **Backend does the heavy lifting:** Server-side handles computation of weighted sums, sorting for top holdings, and data transformations, allowing the frontend to receive ready-to-render data.
 - **Conditional rendering:** Visualization components only mount when valid data exists, avoiding unnecessary Recharts initialization.
 - **Responsive charts:** Recharts `ResponsiveContainer` prevents hard-coded widths and avoids remounting on resize.
 - **Responses (Projection):** The API returns only the fields required by the table and charts to reduce payload size and memory usage.
@@ -128,4 +140,4 @@ If any check fails, the API returns a clear error message with status 400. The U
 - **Top-K optimization:** Replace sorting with a min-heap to compute top 5 holdings in O(n log k) instead of O(n log n).
 - **Request cancellation:** Cancel in-flight uploads if a user uploads again (e.g., `AbortController` with axios).
 - **Result caching:** Cache previously uploaded ETF results client-side to avoid redundant re-processing for identical uploads.
-- **Server-side pagination:** Return only a page of table results at a time for very large constituent lists.
+- **Server-side pagination:** For very large constituent lists, add a separate GET endpoint that accepts `skip` and `take` query parameters. When the user changes the rows per page or navigates to the next page in the table, the frontend would trigger a GET request with the updated `skip` and `take` values to retrieve only the needed slice of data from the server.

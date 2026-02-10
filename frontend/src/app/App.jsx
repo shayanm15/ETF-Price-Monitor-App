@@ -5,8 +5,6 @@ function App() {
 
   return (
     <div className="appContainer">
-      <h1>ETF Price Monitor</h1>
-      <p>Historical Price Viewer for ETFs</p>
       <ETFDashboard />
     </div>
   )
