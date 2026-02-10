@@ -21,16 +21,16 @@ git clone <repo url>
 cd ETF-Price-Monitor-App
 ```
 
-**Start the frontend**
+**Start the backend**
 ```bash
-cd frontend
+cd backend
 npm install
 npm run dev
 ```
 
-**Start the backend**
+**Start the frontend**
 ```bash
-cd backend
+cd frontend
 npm install
 npm run dev
 ```
