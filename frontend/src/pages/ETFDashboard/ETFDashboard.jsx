@@ -17,6 +17,8 @@ const ETFDashboard = () => {
 
     return (
         <>
+            <h1>ETF Price Monitor</h1>
+            <p>Historical Price Viewer for ETFs</p>
             {loading ? (
                 <Spinner />
             ) : (
