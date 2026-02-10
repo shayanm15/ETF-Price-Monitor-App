@@ -61,6 +61,7 @@ const FileUpload = ({
         // Exit execution and set error if exactly one file is not being dragged and dropped
         if (e.dataTransfer.files.length !== 1) {
             setError('Please only upload 1 CSV file');
+            setETFData(null);
             setOpenAlert(true);
             return;
         }
